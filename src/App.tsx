@@ -1,7 +1,7 @@
 import {useState,useEffect,type ReactNode} from "react";
 import AuthPage from "./AuthPage";
 import {api,type User,type Course as ApiCourse} from "./api";
-import {BookOpen,Brain,ChartNoAxesColumnIncreasing,CircleHelp,Clock3,FileUp,Flame,Home,Library,Plus,Search,Settings,Sparkles,Target,Upload,ChevronRight,Check,X,Menu,Bell,ArrowUpRight,Play,Bookmark} from "lucide-react";
+import {BookOpen,Brain,BarChart3,CircleHelp,Clock3,FileUp,Flame,Home,Library,Plus,Search,Settings,Sparkles,Target,Upload,ChevronRight,Check,X,Menu,Bell,ArrowUpRight,Play,Bookmark} from "lucide-react";
 type Page="home"|"courses"|"review"|"quiz"|"progress"|"course";
 type CourseChapter={id:string;title:string;summary:string;mastery:number;sort_order:number};
 type ActiveQuiz={id:string;title:string;questions:Array<{id:string;prompt:string;options:string[];chapter?:string;sourceRef?:string;explanation?:string}>};
