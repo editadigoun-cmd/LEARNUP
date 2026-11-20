@@ -1,0 +1,1 @@
+ALTER TABLE chapters ADD COLUMN source_excerpt TEXT NOT NULL DEFAULT ''; INSERT OR IGNORE INTO schema_migrations(version) VALUES('0002_chapter_source_excerpt');
