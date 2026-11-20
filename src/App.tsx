@@ -5,6 +5,7 @@ import {BookOpen,Brain,BarChart3,CircleHelp,Clock3,FileUp,Flame,Home,Library,Plu
 type Page="home"|"courses"|"review"|"quiz"|"progress"|"course";
 type CourseChapter={id:string;title:string;summary:string;mastery:number;sort_order:number};
 type DueCard={id:string;front:string;back:string;due_at:string|null;chapter_title:string;course_title:string};
+type QuizReport={chapterResults:Array<{chapterId:string;chapter:string;score:number;correct:number;total:number;mastery:number}>;missed:Array<{prompt:string;learner_answer:string;correct_answer:string;explanation:string;source_ref:string|null}>};
 type ActiveQuiz={id:string;title:string;questions:Array<{id:string;prompt:string;options:string[];correctIndex?:number;chapter?:string;sourceRef?:string;explanation?:string}>};
 type DisplayCourse={id:string|number;name:string;subject:string;chapters:number;mastery:number;color:string;icon:string;updated:string};
 const apiEnabled=import.meta.env.VITE_API_ENABLED==="true";
