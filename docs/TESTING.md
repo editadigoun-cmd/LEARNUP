@@ -26,4 +26,4 @@ Lint, typecheck, unit tests, production build and Playwright E2E. Failures block
 Versioned fixture documents and expected concepts. Evaluate relevance, factual correctness, source support, ambiguity, duplication, explanation usefulness and coverage by chapter. Track quality by model/prompt version, not only HTTP success.
 ## Deployment gate
 
-The Cloudflare Pages build now runs backend typecheck/unit tests, frontend lint/typecheck/unit tests, then the production Vite build before publishing. Playwright E2E is also required by GitHub Actions.
+GitHub Actions is configured to run backend typecheck/unit tests, frontend lint/typecheck/unit tests, production build and Playwright E2E. Cloudflare Pages runs npm install and the production build.
