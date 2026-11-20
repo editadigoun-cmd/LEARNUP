@@ -3,7 +3,8 @@ import type {Context} from "hono";
 import {secureHeaders} from "hono/secure-headers";
 import {getCookie,setCookie,deleteCookie} from "hono/cookie";
 import {z} from "zod";
-import {validateGroundedQuestions} from "./quiz-quality";\nimport {validateStudyStructure,type StudyStructure} from "./document-analysis";
+import {validateGroundedQuestions} from "./quiz-quality";
+import {validateStudyStructure,type StudyStructure} from "./document-analysis";
 import {nextReview} from "./learning";
 
 type AIService={toMarkdown:(files:{name:string;blob:Blob}[])=>Promise<Array<{name:string;format:"markdown"|"text"|"error";data?:string;error?:string}>>;run:(model:string,input:Record<string,unknown>)=>Promise<{response?:string|unknown}>};
