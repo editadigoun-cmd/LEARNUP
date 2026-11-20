@@ -1,28 +1,26 @@
 # LEARNUP
 
-A premium learning companion that transforms students' own course material into structured lessons, short revision cards, adaptive quizzes, and measurable mastery.
+LEARNUP is a premium learning companion: students import their own course materials and turn them into structured lessons, short revision cards, adaptive quizzes, explanations and mastery tracking.
 
 ## Product principles
 - Short, structured, readable learning sessions
-- Course-grounded explanations and questions with source references
-- Mastery tracking by chapter and concept
+- Course-grounded explanations with source references
+- Mastery by chapter and concept
 - Adaptive spaced review
-- Accessible, mobile-first premium design
-- Privacy-first handling of student documents
+- Mobile-first premium design
+- Privacy-first student documents
 
 ## Stack
-- React + TypeScript + Vite (installable mobile-first PWA; Capacitor-ready)
-- Cloudflare Workers API (Hono), D1 relational data, R2 documents, Queues for asynchronous processing
-- Workers AI behind a provider abstraction for course analysis and generation
-- Vitest + Testing Library for unit/component tests; Playwright for end-to-end flows
+- React + TypeScript + Vite, installable PWA and mobile-first UI
+- Cloudflare Workers API + D1 + private R2 + Queues + Workers AI
+- Vitest + Testing Library + Playwright
 
-## Status
-Initial product foundation is being built. See docs/ROADMAP.md, docs/ARCHITECTURE.md, and docs/TESTING.md.
+## Current status
+The UI currently uses demo data. Dashboard, course library, review plan, interactive quiz explanations and progress screens are in the prototype. API/backend foundations are being built; the app is not yet production-ready or deployed.
 
-## Local development
-Prerequisites: Node.js LTS and npm. Run npm install then npm run dev.
+## Development
+Node LTS: npm install, npm run dev.
 
-## Quality checks
-Run npm run lint, npm run typecheck, npm run test, npm run test:e2e, and npm run build.
+Quality checks: npm run lint, npm run typecheck, npm run test, npm run test:backend, npm run typecheck:backend, npm run test:e2e, npm run build.
 
-Cloudflare setup/deployment is documented in backend/README.md. No secrets belong in source control.
+See docs/ROADMAP.md, docs/ARCHITECTURE.md, docs/TESTING.md, and docs/CLOUDFLARE.md. Never commit secrets or student documents.
