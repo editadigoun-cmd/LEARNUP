@@ -1,4 +1,5 @@
-import {Hono} from "hono";\nimport type {Context} from "hono";
+import {Hono} from "hono";
+import type {Context} from "hono";
 import {secureHeaders} from "hono/secure-headers";
 import {getCookie,setCookie,deleteCookie} from "hono/cookie";
 import {z} from "zod";
