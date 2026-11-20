@@ -4,7 +4,7 @@ import {api,type User,type Course as ApiCourse} from "./api";
 import {BookOpen,Brain,BarChart3,CircleHelp,Clock3,FileUp,Flame,Home,Library,Plus,Search,Settings,Sparkles,Target,Upload,ChevronRight,Check,X,Menu,Bell,ArrowUpRight,Play,Bookmark} from "lucide-react";
 type Page="home"|"courses"|"review"|"quiz"|"progress"|"course";
 type CourseChapter={id:string;title:string;summary:string;mastery:number;sort_order:number};
-type ActiveQuiz={id:string;title:string;questions:Array<{id:string;prompt:string;options:string[];chapter?:string;sourceRef?:string;explanation?:string}>};
+type ActiveQuiz={id:string;title:string;questions:Array<{id:string;prompt:string;options:string[];correctIndex?:number;chapter?:string;sourceRef?:string;explanation?:string}>};
 type DisplayCourse={id:string|number;name:string;subject:string;chapters:number;mastery:number;color:string;icon:string;updated:string};
 const apiEnabled=import.meta.env.VITE_API_ENABLED==="true";
 const courses=[{id:1,name:"Biologie cellulaire",subject:"Sciences",chapters:8,mastery:74,color:"blue",icon:"🧬",updated:"Aujourd'hui"},{id:2,name:"Mathématiques",subject:"Mathématiques",chapters:6,mastery:52,color:"teal",icon:"📐",updated:"Hier"},{id:3,name:"Histoire contemporaine",subject:"Histoire",chapters:4,mastery:91,color:"amber",icon:"🌍",updated:"Il y a 3 jours"}];
