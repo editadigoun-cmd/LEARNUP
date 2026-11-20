@@ -1,7 +1,7 @@
 import {Hono} from "hono";\nimport type {Context} from "hono";
 import {secureHeaders} from "hono/secure-headers";
 import {getCookie,setCookie,deleteCookie} from "hono/cookie";
-import {z} from "zod";
+import {z} from "zod";\nimport {validateGroundedQuestions} from "./quiz-quality";
 
 type AIService={toMarkdown:(files:{name:string;blob:Blob}[])=>Promise<Array<{name:string;format:"markdown"|"text"|"error";data?:string;error?:string}>>;run:(model:string,input:Record<string,unknown>)=>Promise<{response?:string|unknown}>};
 type Env={DB:D1Database;FILES:R2Bucket;DOCUMENT_JOBS:Queue<DocumentJob>;AI:AIService;APP_ORIGIN?:string};
@@ -43,7 +43,7 @@ SOURCES:
 ${sourceText}`;
 let generated:unknown;try{const model=c.env.GENERATION_MODEL||"@cf/meta/llama-3.2-3b-instruct";const result=await c.env.AI.run(model,{messages:[{role:"system",content:"Tu produis des évaluations pédagogiques fiables, exclusivement fondées sur les sources fournies. Réponds avec du JSON valide."},{role:"user",content:prompt}],temperature:0.25,max_tokens:6000});generated=parseModelJson(result.response);}catch{return c.json(jsonError("La génération du quiz a échoué. Réessaie dans quelques instants.",503),503);}
 const parsed=z.object({questions:z.array(generatedQuestion).min(1).max(20)}).safeParse(generated);if(!parsed.success)return c.json(jsonError("Le quiz généré n'a pas passé les contrôles de qualité. Réessaie."),502);
-const normalizeSource=(s:string)=>s.toLocaleLowerCase("fr").replace(/\s+/g," ").trim();const sourceNormalized=normalizeSource(sourceText);const questions=parsed.data.questions.filter((q,i,a)=>sourceNormalized.includes(normalizeSource(q.sourceExcerpt))&&a.findIndex(other=>other.prompt.trim().toLowerCase()===q.prompt.trim().toLowerCase())===i).slice(0,body.data.count);if(questions.length!==body.data.count)return c.json(jsonError("Les questions générées ne sont pas suffisamment ancrées dans le cours. Réessaie."),502);
+const quality=validateGroundedQuestions(sourceText,parsed.data.questions,body.data.count);const questions=quality.questions;if(!quality.valid)return c.json(jsonError("Les questions générées ne sont pas suffisamment ancrées dans le cours. Réessaie."),502);
 const quizId=id();await c.env.DB.prepare("INSERT INTO quiz_sets(id,user_id,course_id,chapter_id,title,difficulty,question_count) VALUES(?,?,?,?,?,?,?)").bind(quizId,user.id,course.id,body.data.chapterId||null,"Quiz · "+course.title,body.data.difficulty,questions.length).run();
 const inserts=questions.map((q,i)=>c.env.DB.prepare("INSERT INTO questions(id,quiz_set_id,prompt,question_type,options_json,correct_answer,explanation,source_ref,sort_order) VALUES(?,?,?,?,?,?,?,?,?)").bind(id(),quizId,q.prompt,"mcq",JSON.stringify(q.options),q.options[q.correctIndex],q.explanation,q.chapter+" · "+q.sourceExcerpt,i));await c.env.DB.batch(inserts);
 return c.json({quiz:{id:quizId,title:"Quiz · "+course.title,difficulty:body.data.difficulty,questionCount:questions.length,questions:questions.map((q,i)=>({id:i+1,prompt:q.prompt,options:q.options,explanation:q.explanation,sourceRef:q.chapter+" · "+q.sourceExcerpt}))}},201);});
