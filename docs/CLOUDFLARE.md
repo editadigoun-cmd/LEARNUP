@@ -24,3 +24,7 @@ Use Workers AI Markdown Conversion binding (env.AI.toMarkdown) for PDF and image
 
 ## No third-party hosting
 LEARNUP's deployment target is Cloudflare. No Vercel or Neon resources are used.
+
+## Model selection
+
+Default generation model: @cf/deepseek-ai/deepseek-v4-flash-0731, configurable with the Worker GENERATION_MODEL variable. Use a quality fallback only after model evaluation; every generated structure/question is checked against source excerpts before storage. Workers AI Markdown Conversion is used for extraction and may incur AI usage for some image conversions.
