@@ -1,11 +1,20 @@
-# Cloudflare backend
+# Cloudflare API backend
 
-Target: Cloudflare Workers API + D1 + private R2 + Queues + Workers AI.
+Target runtime: Cloudflare Workers. Data and processing: D1, private R2, Queues and Workers AI.
 
-- D1: users, sessions, courses, chapter structure, quiz attempts, mastery and review schedules.
-- R2: private PDF/photo uploads and exports.
-- Queues: asynchronous document extraction, OCR and AI generation.
-- Workers AI: inference through an internal provider interface.
-- API Worker: validation, auth, ownership, rate limits, security headers, job status and audit events.
+## Current resources
+- D1: learnup-db — initial schema applied.
+- Queue: learnup-document-processing — provisioned.
+- R2: not enabled on the account; private bucket still needs activation/creation.
 
-Resource provisioning and deployment are not yet configured. Required bindings and token permissions will be documented after setup. Keep credentials in Worker secrets, never Git.
+## Implemented API foundation
+- GET /api/health
+- Registration and login using PBKDF2 password hashing and hashed session tokens in D1
+- HTTP-only secure session cookie, logout, current-user endpoint
+- Course listing, creation and owner-checked deletion
+- Owner-checked PDF/image uploads to R2 and Queue dispatch
+- Queue consumer uses Workers AI Markdown Conversion to extract PDF/image content and records processing state
+
+The Worker has not yet been deployed. Rate limiting, password reset, email verification, CSRF hardening, complete authorization tests, chapter extraction/generation and production observability are still required before public release.
+
+No credentials or uploaded student documents should be committed to Git.
