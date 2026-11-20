@@ -1,26 +1,70 @@
 # LEARNUP
 
-LEARNUP is a premium learning companion: students import their own course materials and turn them into structured lessons, short revision cards, adaptive quizzes, explanations and mastery tracking.
+**LEARNUP** is a mobile-first learning companion designed to turn students' course materials into concise study content, active-recall flashcards, quizzes and chapter-level progress.
 
-## Product principles
-- Short, structured, readable learning sessions
-- Course-grounded explanations with source references
-- Mastery by chapter and concept
-- Adaptive spaced review
-- Mobile-first premium design
-- Privacy-first student documents
+## Product experience
+- Import course material (PDF/photo/file) into a course.
+- Organize content by chapters and concepts.
+- Generate short summaries and flashcards from the learner's own material.
+- Practice quizzes with answer feedback, explanations and source references.
+- Track chapter mastery and identify concepts to revisit.
+- Review with spaced repetition.
 
-## Stack
-- React + TypeScript + Vite, installable PWA and mobile-first UI
-- Cloudflare Workers API + D1 + private R2 + Queues + Workers AI
-- Vitest + Testing Library + Playwright
+## Design principles
+- Premium, clean, airy and mobile-first.
+- Short, structured, readable screens.
+- Quiz and test experience is central.
+- Learning feedback is concise but meaningful: answer, explanation, source and next action.
+- No generic questions when source material is available; quiz content must be grounded in the learner's course.
 
-## Current status
-The UI currently uses demo data. Dashboard, course library, review plan, interactive quiz explanations and progress screens are in the prototype. API/backend foundations are being built; the app is not yet production-ready or deployed.
+## Technology
+- Frontend: React, TypeScript, Vite, PWA-ready.
+- API: Cloudflare Pages Functions / Worker + Hono.
+- Database: Cloudflare D1.
+- File storage: private Cloudflare R2.
+- Background processing: Cloudflare Queues.
+- AI: Cloudflare Workers AI with generation validation and fallback model.
+- Tests: Vitest, Testing Library and Playwright.
 
-## Development
-Node LTS: npm install, npm run dev.
+## Cloudflare deployment
+- Production Pages project: `learnup`
+- Main branch: `main`
+- URL: https://learnup-6aa.pages.dev
+- Latest deployment: successful build and publish (20 Nov 2026).
+- The frontend is currently in demo mode; API integration is not enabled yet (`VITE_API_ENABLED=false`). Do not treat the demo courses/questions as user data.
 
-Quality checks: npm run lint, npm run typecheck, npm run test, npm run test:backend, npm run typecheck:backend, npm run test:e2e, npm run build.
+## Current implementation status
+### Working foundations
+- Premium UI prototype with dashboard, course library, revision, quiz and progress screens.
+- Authentication UI and API routes (registration, login, session, logout).
+- Cloudflare backend route and initial D1 schema.
+- Course CRUD foundations, document upload/processing status.
+- Chapter/flashcard/quiz endpoints and spaced-repetition logic.
+- Grounded quiz generation validation and chapter mastery/missed-answer report.
+- Backend typecheck and unit tests: **14 tests passing across 3 test files** in the latest deployment build.
 
-See docs/ROADMAP.md, docs/ARCHITECTURE.md, docs/TESTING.md, and docs/CLOUDFLARE.md. Never commit secrets or student documents.
+### Not yet production-ready
+- Connect and verify all screens against real accounts and data.
+- End-to-end document import and processing (PDF/photo OCR, extraction, chapter structuring and generated cards).
+- Real student workflow validation on mobile.
+- Complete E2E, security/privacy, accessibility and performance audits.
+- App-store packaging and release.
+
+## Local development
+```bash
+npm install
+npm run dev
+```
+
+## Quality checks
+```bash
+npm run lint
+npm run typecheck
+npm run test
+npm run typecheck:backend
+npm run test:backend
+npm run test:e2e
+npm run build
+```
+
+See `docs/ROADMAP.md`, `docs/ARCHITECTURE.md`, `docs/TESTING.md` and `docs/CLOUDFLARE.md`.
