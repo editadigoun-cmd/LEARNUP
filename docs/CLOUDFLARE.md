@@ -28,3 +28,7 @@ LEARNUP's deployment target is Cloudflare. No Vercel or Neon resources are used.
 ## Model selection
 
 Default generation model: @cf/deepseek-ai/deepseek-v4-flash-0731, configurable with the Worker GENERATION_MODEL variable. Use a quality fallback only after model evaluation; every generated structure/question is checked against source excerpts before storage. Workers AI Markdown Conversion is used for extraction and may incur AI usage for some image conversions.
+
+## Frontend Pages preview
+
+Cloudflare Pages project learnup is connected to the main branch of this repository. Preview URL: https://learnup-6aa.pages.dev. Build command is npm install && npm run build, output directory dist, Node 22. VITE_API_ENABLED is set to false while the API Worker is not deployed, so the site currently uses prototype/demo content.
