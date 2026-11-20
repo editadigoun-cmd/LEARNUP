@@ -14,7 +14,9 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm install
-      - run: npm run typecheck:backend\n      - run: npm run test:backend\n      - run: npm run lint
+      - run: npm run typecheck:backend
+      - run: npm run test:backend
+      - run: npm run lint
       - run: npm run typecheck
       - run: npm run test
       - run: npm run build
